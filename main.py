@@ -23,17 +23,17 @@ print(f"The last 5 rows of the tracks file:\n{tracks.tail()}\n")
 #.shape returns a tuple where the first value is the number of rows and the second value is the number of columns
 print(album.shape)
 print(artists.shape)
-print(album.shape)
+print(tracks.shape)
 
 #displays only the rows 10-20 of the 'name' and 'release date' column
-album.iloc[10:21][['name', 'release_date']]
+print(album.iloc[10:21][['name', 'release_date']])
 
 #---------------------data cleaning----------------------------
-#columns in the album file deemed inconsequential and dropped were: 
+#columns in the album file deemed inconsequential for this assignment and thus dropped were: 
 drop_cols_album = ['external_urls', 'href', 'images', 'release_date_precision', 'uri', 'available_markets']
 album.drop(drop_cols_album, inplace=True, axis=1)
 
-#columns in the tracks file deemed inconsequential were:
+#columns in the tracks file deemed inconsequential for this assignment and thus dropped were:
 drop_cols_tracks = ['analysis_url', 'available_markets', 'uri', 'preview_url']
 tracks.drop(drop_cols_tracks, inplace=True, axis=1)
 
@@ -48,10 +48,9 @@ artists = artists.rename(columns={'id': 'artist_id'})
 duplicate_ids_album =album[album.duplicated(subset='album_id')]
 duplicate_ids_track =tracks[tracks.duplicated(subset='track_id')]
 duplicate_ids_artist =artists[artists.duplicated(subset='artist_id')]
-print(f"duplicate ids:\n {duplicate_ids_album}")
-print(f"duplicate ids:\n {duplicate_ids_track}")
-print(f"duplicate ids:\n {duplicate_ids_artist}")
-#------------------------------------------------------------------
+print(f"list of duplicate id's for album:\n {duplicate_ids_album}")
+print(f"list of duplicate id's for tracks:\n {duplicate_ids_track}")
+print(f"list of duplicate id's for artist:\n {duplicate_ids_artist}")
 
 #map() function to replace '[]' values with NaN
 def fill_genre(value):
@@ -60,5 +59,33 @@ def fill_genre(value):
   else:
     return value
 artists['genres'] = artists['genres'].map(fill_genre)
-artists['genres'].unique()
+
+
+#This prints all the unique values of the lyrics column. These values are essentially paragraphs of the song lyrics. This would be very difficult to parse in excel or other programs because they are massive and clunky values with many different characters, words, etc. 
+print(tracks['lyrics'].unique()) #Shows the unique values of the lyrics column
+tracks.drop(['lyrics'], inplace=True, axis=1) #This drops the lyrics column
+print(tracks.info()) #Displays the lyrics column had indeed been dropped
+
+#---------------------------Joining the Data Sets-------------------------
+#Join artists and albums on the artist ID
+
+artists_with_albums = pd.merge(artists, album, left_on='artist_id', right_on='artist_id')
+print(artists_with_albums.shape)
+print(artists_with_albums.head())
+
+#join albums and tracks on the album_ID
+albums_with_tracks = pd.merge(album, tracks, left_on='album_id', right_on='album_id')
+print(albums_with_tracks.shape)
+print(albums_with_tracks.head())
+
+#-------------------------------------------------------------------------- 
+#Which artists appear the most times in the Artists data?
+print(artists_with_albums[["artist_id", 'artist_name']].value_counts(ascending=False)) #various artists appear the most. Johann Sebastion Bach is the individual artist that appears the most. 
+
+#Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order)
+artists.drop_duplicates(subset='artist_name', inplace=True)
+artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10)
+
+
+
 
