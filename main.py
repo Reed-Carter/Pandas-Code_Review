@@ -82,7 +82,7 @@ print(albums_with_tracks.head())
 #Which artists appear the most times in the Artists data?
 print(artists_with_albums[["artist_id", 'artist_name']].value_counts(ascending=False)) #various artists appear the most. Johann Sebastion Bach is the individual artist that appears the most. 
 
-#Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order)
+#Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order): ['Ariana Grande', 'Drake', 'Post Malone', 'XXXTENTACION', 'Ozuna', 'Khalid', 'Juice WRLD', 'Queen', 'Travis Scott', 'Anuel Aa']
 artists.drop_duplicates(subset='artist_name', inplace=True)
 print(artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10))
 
