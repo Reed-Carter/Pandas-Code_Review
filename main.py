@@ -40,9 +40,9 @@ tracks.drop(drop_cols_tracks, inplace=True, axis=1)
 #no columns in the artists data set were inconsequential thus were not dropped.
 
 #rename the id column to be consistent with the other files
-album = album.rename(columns={'id': 'album_id'})
-tracks = tracks.rename(columns={'id': 'track_id'})
-artists = artists.rename(columns={'id': 'artist_id'})
+album = album.rename(columns={'id': 'album_id', 'name': 'song_name'})
+tracks = tracks.rename(columns={'id': 'track_id', 'name': 'track_name'})
+artists = artists.rename(columns={'id': 'artist_id', 'name': 'artist_name'})
 
 #check for duplicate id's: no duplicates
 duplicate_ids_album =album[album.duplicated(subset='album_id')]
@@ -84,7 +84,7 @@ print(artists_with_albums[["artist_id", 'artist_name']].value_counts(ascending=F
 
 #Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order)
 artists.drop_duplicates(subset='artist_name', inplace=True)
-artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10)
+print(artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10))
 
 
 
