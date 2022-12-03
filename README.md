@@ -2,7 +2,7 @@
 
 #### By Reed Carter
 
-#### A series of functions to demonstrate an advanced understanding of Python 
+#### A series of functions to demonstrate an understanding of Pandas 
 
 ## Technologies Used
 
