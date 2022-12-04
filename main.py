@@ -39,7 +39,7 @@ tracks.drop(drop_cols_tracks, inplace=True, axis=1)
 
 #no columns in the artists data set were inconsequential thus were not dropped.
 
-#rename the id column to be consistent with the other files
+#rename the id and name column to be more clear
 album = album.rename(columns={'id': 'album_id', 'name': 'song_name'})
 tracks = tracks.rename(columns={'id': 'track_id', 'name': 'track_name'})
 artists = artists.rename(columns={'id': 'artist_id', 'name': 'artist_name'})
@@ -67,9 +67,9 @@ tracks.drop(['lyrics'], inplace=True, axis=1) #This drops the lyrics column
 print(tracks.info()) #Displays the lyrics column had indeed been dropped
 
 #---------------------------Joining the Data Sets-------------------------
-#outer joins were used in this data set to ensure no data was lost. The NaN values would not affect future calculations for the purpose of this assignment and the increase in possible un-needed rows did not reduce performance which could happen in a much larger data sets where a 'clunky' data set would slow things down.
 #Join artists and albums on the artist ID
 
+#outer joins were used to join these data sets to ensure no data was lost. The NaN values would not affect future calculations for the purpose of this assignment and the increase in possible un-needed rows did not reduce performance which could happen in a much larger data sets where a 'clunky' data set would slow things down.
 artists_with_albums = pd.merge(artists, album, on='artist_id', how='outer')
 print(artists_with_albums.shape)
 print(artists_with_albums.head())
@@ -81,7 +81,7 @@ albums_with_tracks.head()
 
 #-------------------------------------------------------------------------- 
 #Which artists appear the most times in the Artists data?
-print(artists_with_albums[["artist_id", 'artist_name']].value_counts(ascending=False)) #various artists appear the most. Johann Sebastion Bach is the individual artist that appears the most. 
+print(artists[['artist_name']].value_counts(ascending=False)) #'Haze' appears the most, with 5 appearances 
 
 #Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order): ['Ariana Grande', 'Drake', 'Post Malone', 'XXXTENTACION', 'Ozuna', 'Khalid', 'Juice WRLD', 'Queen', 'Travis Scott', 'Anuel Aa']
 artists.drop_duplicates(subset='artist_name', inplace=True)
