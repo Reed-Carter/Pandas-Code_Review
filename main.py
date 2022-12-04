@@ -67,16 +67,17 @@ tracks.drop(['lyrics'], inplace=True, axis=1) #This drops the lyrics column
 print(tracks.info()) #Displays the lyrics column had indeed been dropped
 
 #---------------------------Joining the Data Sets-------------------------
+#outer joins were used in this data set to ensure no data was lost. The NaN values would not affect future calculations for the purpose of this assignment and the increase in possible un-needed rows did not reduce performance which could happen in a much larger data sets where a 'clunky' data set would slow things down.
 #Join artists and albums on the artist ID
 
-artists_with_albums = pd.merge(artists, album, left_on='artist_id', right_on='artist_id')
+artists_with_albums = pd.merge(artists, album, on='artist_id', how='outer')
 print(artists_with_albums.shape)
 print(artists_with_albums.head())
 
 #join albums and tracks on the album_ID
-albums_with_tracks = pd.merge(album, tracks, left_on='album_id', right_on='album_id')
+albums_with_tracks = pd.merge(album, tracks, on='album_id', how='outer')
 print(albums_with_tracks.shape)
-print(albums_with_tracks.head())
+albums_with_tracks.head()
 
 #-------------------------------------------------------------------------- 
 #Which artists appear the most times in the Artists data?
