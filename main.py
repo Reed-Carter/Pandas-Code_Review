@@ -25,7 +25,7 @@ print(album.shape)
 print(artists.shape)
 print(tracks.shape)
 
-#displays only the rows 10-20 of the 'name' and 'release date' column
+#displays only rows 10-20 of the 'name' and 'release date' column
 print(album.iloc[10:21][['name', 'release_date']])
 
 #---------------------data cleaning----------------------------
@@ -86,6 +86,13 @@ print(artists[['artist_name']].value_counts(ascending=False)) #'Haze' appears th
 #Which artists have the highest 'artist_popularity' rankings? (list the top ten in descending order): ['Ariana Grande', 'Drake', 'Post Malone', 'XXXTENTACION', 'Ozuna', 'Khalid', 'Juice WRLD', 'Queen', 'Travis Scott', 'Anuel Aa']
 artists.drop_duplicates(subset='artist_name', inplace=True)
 print(artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10))
+
+#-------------------------BONUS-------------------------------------------
+#Displays the number of albums released each year:{2018: 22050, 2019: 11125, 2017: 9231...} 
+album['year'] = pd.DatetimeIndex(album['release_date']).year
+print(album[['year']].value_counts())
+
+
 
 
 
