@@ -14,7 +14,8 @@
 
 ## Description
 
-These are a series of functions used to demonstrate my understanding of Pandas.  A complete repository can be found here: https://github.com/Reed-Carter/Pandas-Code_Review.git
+The main.py file contains numerous lines of code which manipulate and transform 3 spotify data sets in order to demonstrate my understanding of Pandas.  A complete repository can be found here: https://github.com/Reed-Carter/Pandas-Code_Review.git
+
 
 ## Setup/Installation Requirements
 

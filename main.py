@@ -88,9 +88,13 @@ artists.drop_duplicates(subset='artist_name', inplace=True)
 print(artists[['artist_popularity', 'artist_name']].sort_values(by='artist_popularity', ascending=False).head(10))
 
 #-------------------------BONUS-------------------------------------------
-#Displays the number of albums released each year:{2018: 22050, 2019: 11125, 2017: 9231...} 
+#Displays the number of albums released each year: {2018: 22050, 2019: 11125, 2017: 9231...} 
 album['year'] = pd.DatetimeIndex(album['release_date']).year
 print(album[['year']].value_counts())
+
+#displays a bar graph displaying the number of albums released each year since the year 2000
+album['year'].value_counts().sort_index(ascending=False)[ :20].plot(xlabel='Year', ylabel='Number of Albums', title='Number of Albums Released Each Year', kind='barh')
+
 
 
 
